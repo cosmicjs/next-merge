@@ -45,6 +45,7 @@ export default function Index({ allPosts }) {
               author={heroPost.metadata.author}
               slug={heroPost.slug}
               excerpt={heroPost.metadata.excerpt}
+              merge_id={merge_id}
             />
           )}
           {morePosts.length > 0 && <MoreStories posts={morePosts} />}

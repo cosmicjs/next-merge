@@ -10,11 +10,20 @@ export default function HeroPost({
   excerpt,
   author,
   slug,
+  merge_id
 }) {
   return (
     <section>
       <div className="mb-8 md:mb-16">
-        <CoverImage title={title} url={coverImage.imgix_url} slug={slug} />
+        {
+          !merge_id &&
+          <CoverImage title={title} url={coverImage.imgix_url} slug={slug} />
+        }
+        {
+          // Because Imgix component weirdness
+          merge_id &&
+          <img className="w-full" title={title} src={`${coverImage.imgix_url}?w=1000`} slug={slug} />
+        }
       </div>
       <div className="md:grid md:grid-cols-2 md:col-gap-16 lg:col-gap-8 mb-20 md:mb-28">
         <div>
