@@ -20,9 +20,9 @@ export default function Index({ allPosts }) {
       if (mergePosts) {
         allPosts = combineMergeContent(allPosts, mergePosts)
       }
-      allPosts = _.orderBy(allPosts, ['created_at'],['desc'])
     }
   }
+  allPosts = _.orderBy(allPosts, ['created_at'],['desc'])
   const heroPost = allPosts[0]
   const morePosts = allPosts.slice(1)
   return (
