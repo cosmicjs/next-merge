@@ -14,21 +14,34 @@ import { CMS_NAME } from '@/lib/constants'
 import markdownToHtml from '@/lib/markdownToHtml'
 import useSWR from 'swr'
 import _ from 'lodash'
+import { getMergeId } from '@/lib/merge'
+import { useEffect, useState } from 'react'
+import RemoveMergeContentBanner from '@/components/remove-merge-content-banner'
 
 export default function Post({ post, morePosts, preview }) {
+  let merge_id;
   const router = useRouter()
   if (process.browser) {
-    const { slug } = router.query
-    const urlParams = new URLSearchParams(window.location.search);
-    let merge_id = urlParams.get('merge_id');
-    if (window.localStorage.getItem('merge_id'))
-      merge_id = window.localStorage.getItem('merge_id');
+    const { slug } = router.query;
+    merge_id = getMergeId()
     if (merge_id) {
       const { data: mergePosts } = useSWR(`/api/get-merge-request-posts/${merge_id}`)
       const mergePost = _.find(mergePosts, { slug: slug });
-      if (mergePost)
+      if (mergePost) {
         post = mergePost;
-      localStorage.setItem('merge_id',merge_id)
+      }
+      const [post_content, setPostContent] = useState('');
+      if (post) {
+        post.content = post_content;
+        useEffect(() => {
+          if (!post_content)
+            getPostMarkdown();
+        }, []);
+        const getPostMarkdown = async () => {
+          const html = await markdownToHtml(post?.metadata?.content || '')
+          setPostContent(html);
+        };
+      }
     }
   }
   if (!router.isFallback && !post?.slug) {
@@ -37,6 +50,10 @@ export default function Post({ post, morePosts, preview }) {
   return (
     <Layout preview={preview}>
       <Container>
+        {
+          merge_id &&
+          <RemoveMergeContentBanner />
+        }
         <Header />
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>

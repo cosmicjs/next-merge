@@ -8,40 +8,19 @@ import Head from 'next/head'
 import { CMS_NAME } from '@/lib/constants'
 import useSWR from 'swr'
 import _ from 'lodash'
-
-const removeMergeContent = () => {
-  localStorage.removeItem('merge_id')
-  window.location.href = '/';
-}
+import { getMergeId, combineMergeContent } from '@/lib/merge'
+import RemoveMergeContentBanner from '@/components/remove-merge-content-banner'
 
 export default function Index({ allPosts }) {
-  let has_merge_content;
-  // Check for merge_id in URL or localStorage
+  let merge_id;
   if (process.browser) {
-    const urlParams = new URLSearchParams(window.location.search);
-    let merge_id = urlParams.get('merge_id');
-    if (window.localStorage.getItem('merge_id'))
-      merge_id = window.localStorage.getItem('merge_id');
+    merge_id = getMergeId();
     if (merge_id) {
       const { data: mergePosts } = useSWR(`/api/get-merge-request-posts/${merge_id}`)
       if (mergePosts) {
-        allPosts.forEach((post, i) => {
-          const mergePostFound = _.find(mergePosts, { slug: post.slug });
-          if (mergePostFound) {
-            allPosts[i] = mergePostFound;
-          }
-        })
-        // Add new post
-        mergePosts.forEach((post, i) => {
-          const allPostFound = _.find(allPosts, { slug: post.slug });
-          if (!allPostFound && post.type_slug === 'posts') {
-            allPosts.push(post);
-          }
-        })
+        allPosts = combineMergeContent(allPosts, mergePosts)
       }
       allPosts = _.orderBy(allPosts, ['created_at'],['desc'])
-      localStorage.setItem('merge_id',merge_id)
-      has_merge_content = true;
     }
   }
   const heroPost = allPosts[0]
@@ -54,8 +33,8 @@ export default function Index({ allPosts }) {
         </Head>
         <Container>
           {
-            has_merge_content &&
-            <div className="text-center pt-5 pb-5 bg-black text-white">You are previewing merge content. <span className="cursor-pointer" onClick={() => removeMergeContent() }>Click here to remove</span>.</div>
+            merge_id &&
+            <RemoveMergeContentBanner />
           }
           <Intro />
           {heroPost && (
