@@ -7,16 +7,35 @@ import Header from '@/components/header'
 import PostHeader from '@/components/post-header'
 import SectionSeparator from '@/components/section-separator'
 import Layout from '@/components/layout'
-import { getAllPostsWithSlug, getPostAndMorePosts, getMergeRequestPosts } from '@/lib/api'
+import { getAllPostsWithSlug, getPostAndMorePosts } from '@/lib/api'
 import PostTitle from '@/components/post-title'
 import Head from 'next/head'
 import { CMS_NAME } from '@/lib/constants'
 import markdownToHtml from '@/lib/markdownToHtml'
+import useSWR from 'swr'
+import _ from 'lodash'
 
 export default function Post({ post, morePosts, preview }) {
   const router = useRouter()
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
+  }
+  if (process.browser) {
+    const router = useRouter()
+    const { slug } = router.query
+    const urlParams = new URLSearchParams(window.location.search);
+    let merge_id = urlParams.get('merge_id');
+    if (window.localStorage.getItem('merge_id'))
+      merge_id = window.localStorage.getItem('merge_id');
+    console.log(router.query)
+    if (merge_id) {
+      const { data: mergePosts } = useSWR(`/api/get-merge-request-posts/${merge_id}`)
+      const mergePost = _.find(mergePosts, { slug: slug });
+      if (mergePost)
+        post = mergePost;
+      console.log(mergePosts, slug)
+      localStorage.setItem('merge_id',merge_id)
+    }
   }
   return (
     <Layout preview={preview}>
