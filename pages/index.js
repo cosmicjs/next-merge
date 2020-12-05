@@ -14,7 +14,7 @@ import RemoveMergeContentBanner from '@/components/remove-merge-content-banner'
 export default function Index({ allPosts }) {
   let merge_id;
   if (process.browser) {
-    merge_id = getMergeId();
+    merge_id = getMergeId()
     if (merge_id) {
       const { data: mergePosts } = useSWR(`/api/get-merge-request-posts/${merge_id}`)
       if (mergePosts) {

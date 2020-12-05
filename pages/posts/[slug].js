@@ -15,33 +15,17 @@ import markdownToHtml from '@/lib/markdownToHtml'
 import useSWR from 'swr'
 import _ from 'lodash'
 import { getMergeId } from '@/lib/merge'
-import { useEffect, useState } from 'react'
 import RemoveMergeContentBanner from '@/components/remove-merge-content-banner'
 
 export default function Post({ post, morePosts, preview }) {
   let merge_id;
   const router = useRouter()
   if (process.browser) {
-    const { slug } = router.query;
+    const { slug } = router.query
     merge_id = getMergeId()
-    if (merge_id) {
-      const { data: mergePosts } = useSWR(`/api/get-merge-request-posts/${merge_id}`)
-      const mergePost = _.find(mergePosts, { slug: slug });
-      if (mergePost) {
-        post = mergePost;
-      }
-      const [post_content, setPostContent] = useState('');
-      if (post) {
-        post.content = post_content;
-        useEffect(() => {
-          if (!post_content)
-            getPostMarkdown();
-        }, []);
-        const getPostMarkdown = async () => {
-          const html = await markdownToHtml(post?.metadata?.content || '')
-          setPostContent(html);
-        };
-      }
+    if (merge_id && slug) {
+      const { data: mergePost } = useSWR(`/api/get-merge-request-posts/${merge_id}/${slug}`)
+      post = mergePost
     }
   }
   if (!router.isFallback && !post?.slug) {
