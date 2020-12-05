@@ -24,6 +24,7 @@ export default function Post({ post, morePosts, preview }) {
     const { slug } = router.query
     merge_id = getMergeId()
     if (merge_id && slug) {
+      // Check for has merge post
       const { data: mergePost } = useSWR(`/api/get-merge-request-posts/${merge_id}/${slug}`)
       if (mergePost)
         post = mergePost

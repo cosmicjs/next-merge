@@ -16,6 +16,7 @@ export default function Index({ allPosts }) {
   if (process.browser) {
     merge_id = getMergeId()
     if (merge_id) {
+      // Check for has merge posts
       const { data: mergePosts } = useSWR(`/api/get-merge-request-posts/${merge_id}`)
       if (mergePosts) {
         allPosts = combineMergeContent(allPosts, mergePosts)
