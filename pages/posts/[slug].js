@@ -25,7 +25,8 @@ export default function Post({ post, morePosts, preview }) {
     merge_id = getMergeId()
     if (merge_id && slug) {
       const { data: mergePost } = useSWR(`/api/get-merge-request-posts/${merge_id}/${slug}`)
-      post = mergePost
+      if (mergePost)
+        post = mergePost
     }
   }
   if (!router.isFallback && !post?.slug) {
