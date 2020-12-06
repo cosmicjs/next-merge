@@ -13,13 +13,16 @@ import RemoveMergeContentBanner from '@/components/remove-merge-content-banner'
 
 export default function Index({ allPosts }) {
   let merge_id;
+  let loading_merge;
   if (process.browser) {
     merge_id = getMergeId()
     if (merge_id) {
+      loading_merge = true;
       // Check for has merge posts
       const { data: mergePosts } = useSWR(`/api/get-merge-request-posts/${merge_id}`)
       if (mergePosts) {
         allPosts = combineMergeContent(allPosts, mergePosts)
+        loading_merge = false;
       }
     }
   }
@@ -37,19 +40,27 @@ export default function Index({ allPosts }) {
             merge_id &&
             <RemoveMergeContentBanner />
           }
-          <Intro />
-          {heroPost && (
-            <HeroPost
-              title={heroPost.title}
-              coverImage={heroPost.metadata.cover_image}
-              date={heroPost.created_at}
-              author={heroPost.metadata.author}
-              slug={heroPost.slug}
-              excerpt={heroPost.metadata.excerpt}
-              merge_id={merge_id}
-            />
+          {loading_merge ? (
+            <h1 className="mt-12 text-center text-4xl font-bold tracking-tighter leading-tight">
+              Loading Merge Preview...
+            </h1>
+          ) : (
+            <>
+              <Intro />
+              {heroPost && (
+                <HeroPost
+                  title={heroPost.title}
+                  coverImage={heroPost.metadata.cover_image}
+                  date={heroPost.created_at}
+                  author={heroPost.metadata.author}
+                  slug={heroPost.slug}
+                  excerpt={heroPost.metadata.excerpt}
+                  merge_id={merge_id}
+                />
+              )}
+              {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+            </>
           )}
-          {morePosts.length > 0 && <MoreStories posts={morePosts} />}
         </Container>
       </Layout>
     </>

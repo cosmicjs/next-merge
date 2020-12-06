@@ -26,9 +26,14 @@ export default function Post({ post, morePosts, preview }) {
     if (merge_id && slug) {
       // Check for has merge post
       const { data: mergePost } = useSWR(`/api/get-merge-request-posts/${merge_id}/${slug}`)
-      if (mergePost)
+      if (mergePost && mergePost.status !== 404) {
         post = mergePost
+        delete router.isFallback
+      }
     }
+  }
+  if (merge_id && !post?.slug) {
+    router.isFallback = true;
   }
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
