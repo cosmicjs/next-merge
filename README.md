@@ -1,4 +1,4 @@
-# A statically generated blog example using Next.js and Cosmic
+# A statically generated blog example using Next.js, Cosmic, and Cosmic Merge preview capabilities
 
 This example showcases Next.js's [Static Generation](https://nextjs.org/docs/basic-features/pages) feature using [Cosmic](https://cosmicjs.com/) as the data source.
 
@@ -12,30 +12,13 @@ Once you have access to [the environment variables you'll need](#step-3-set-up-e
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/git?c=1&s=https://github.com/vercel/next.js/tree/canary/examples/cms-cosmic&env=COSMIC_BUCKET_SLUG,COSMIC_READ_KEY,COSMIC_PREVIEW_SECRET&envDescription=Required%20to%20connect%20the%20app%20with%20Cosmic&envLink=https://vercel.link/cms-cosmic-env)
 
-### Related examples
-
-- [WordPress](/examples/cms-wordpress)
-- [DatoCMS](/examples/cms-datocms)
-- [Sanity](/examples/cms-sanity)
-- [TakeShape](/examples/cms-takeshape)
-- [Prismic](/examples/cms-prismic)
-- [Contentful](/examples/cms-contentful)
-- [Strapi](/examples/cms-strapi)
-- [Agility CMS](/examples/cms-agilitycms)
-- [ButterCMS](/examples/cms-buttercms)
-- [Storyblok](/examples/cms-storyblok)
-- [GraphCMS](/examples/cms-graphcms)
-- [Kontent](/examples/cms-kontent)
-- [Blog Starter](/examples/blog-starter)
 
 ## How to use
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+Clone the repo to install and bootstrap the example:
 
 ```bash
-npx create-next-app --example cms-cosmic cms-cosmic-app
-# or
-yarn create next-app --example cms-cosmic cms-cosmic-app
+git clone https://github.com/cosmicjs/next-merge
 ```
 
 ## Configuration
@@ -44,9 +27,9 @@ yarn create next-app --example cms-cosmic cms-cosmic-app
 
 First, [create an account on Cosmic](https://cosmicjs.com).
 
-### Step 2. Install the Next.js Static Blog app
+### Step 2. Install the Next.js Merge Blog
 
-After creating an account, install the [Next.js Static Blog](https://www.cosmicjs.com/apps/nextjs-static-blog) app from the Cosmic App Marketplace.
+After creating an account, install the [Next.js Merge Blog](https://www.cosmicjs.com/apps/nextjs-merge-blog) app from the Cosmic App Marketplace.
 
 ### Step 3. Set up environment variables
 
@@ -76,43 +59,34 @@ COSMIC_PREVIEW_SECRET=...
 
 ```bash
 npm install
-npm run dev
+PORT=4000 npm run dev
 
 # or
 
 yarn install
-yarn dev
+PORT=4000 yarn dev
 ```
 
-Your blog should be up and running on [http://localhost:3000](http://localhost:3000)! If it doesn't work, post on [GitHub discussions](https://github.com/vercel/next.js/discussions).
+Your blog should be up and running on [http://localhost:3000](http://localhost:4000)! If it doesn't work, post on [GitHub discussions](https://github.com/vercel/next.js/discussions).
 
-### Step 5. Try preview mode
+### Step 5. Try Merge preview mode
 
-To add the ability to preview content from your Cosmic dashboard go to **Posts > Edit Settings** and scroll down to the "Preview Link" section. (Screenshot below)
+To add the ability to preview content from a merge request, follow these steps:
 
-![Image](https://cdn.cosmicjs.com/14e6c0f0-a07b-11ea-829b-5b458b05d525-preview-link.png)
-
-Add your live URL or localhost development URL which includes your chosen preview secret and `[object_slug]` shortcode. It should look like the following:
-
+1. In the Projects page in Cosmic, clone your current Bucket with Next.js Merge content into a new Staging Bucket by clicking "Clone Bucket"
+2. After cloning your Bucket, create a new merge request in your Bucket project clicking the "Merge Icon" in the main nav (or from the Projects table located in `/projects` after logging in)
+3. Select the Source Bucket (Staging) to your Target Bucket (Production). Click "Review Changes".
+4. There shouldn't be any changes to preview yet. Add your merge link exactly as this:
 ```
-http://localhost:3000/api/preview?secret=<secret>&slug=[object_slug]
+http://localhost:4000?merge_id=[merge_id]
 ```
+Click "Save".
+4. Now you can Add or Edit any content in your Staging Bucket.
+5. After adding and editing content in staging, go back to your Merge Request and notice the Changes to Objects, Object Types, and / or Media.
+6. Click the "Preview" button to see content from the merge request now visible in your locally running app.
+7. Make more changes in your Staging Bucket and see real time updates in the app :)
 
-- `<secret>` is the string you entered for `COSMIC_PREVIEW_SECRET`.
-- `[object_slug]` shortcode will automatically be converted to the post's `slug` attribute.
-
-On Cosmic, go to one of the posts you've created and:
-
-- **Update the title**. For example, you can add `[Draft]` in front of the title.
-- Click **Save Draft**, but **DO NOT** click **Publish**. By doing this, the post will be in the draft state.
-
-Now, if you go to the post page directly on localhost, you won't see the updated title. However, if you use the **Preview Mode**, you'll be able to see the change ([Documentation](https://nextjs.org/docs/advanced-features/preview-mode)).
-
-Next, click the Preview Link button on the Post to see the updated title. (Screenshot below)
-
-<img src="https://cdn.cosmicjs.com/80f42680-a07a-11ea-829b-5b458b05d525-preview-button.png" width="300" />
-
-To exit preview mode, you can click on **Click here to exit preview mode** at the top.
+To exit preview mode, you can click on **You are previewing merge content. Click here to remove** at the top.
 
 ### Step 6. Deploy on Vercel
 
@@ -128,4 +102,4 @@ To deploy your local project to Vercel, push it to GitHub/GitLab/Bitbucket and [
 
 Alternatively, you can deploy using our template by clicking on the Deploy button below.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/git?c=1&s=https://github.com/vercel/next.js/tree/canary/examples/cms-cosmic&env=COSMIC_BUCKET_SLUG,COSMIC_READ_KEY,COSMIC_PREVIEW_SECRET&envDescription=Required%20to%20connect%20the%20app%20with%20Cosmic&envLink=https://vercel.link/cms-cosmic-env)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/git?c=1&s=https://github.com/cosmicjs/next-merge&env=COSMIC_BUCKET_SLUG,COSMIC_READ_KEY,COSMIC_PREVIEW_SECRET&envDescription=Required%20to%20connect%20the%20app%20with%20Cosmic&envLink=https://vercel.link/cms-cosmic-env)

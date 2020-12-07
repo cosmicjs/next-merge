@@ -13,15 +13,15 @@ export default function Intro() {
           className="underline hover:text-success duration-200 transition-colors"
         >
           Next.js
-        </a>{' '}
-        and{' '}
+        </a>,{' '}
         <a
           href={CMS_URL}
           className="underline hover:text-success duration-200 transition-colors"
         >
           {CMS_NAME}
-        </a>
-        .
+          </a>,
+        {' '}and includes
+        Cosmic Merge preview capabilities.
       </h4>
     </section>
   )

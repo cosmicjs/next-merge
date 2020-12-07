@@ -20,8 +20,8 @@ export default function Index({ allPosts }) {
     const { data: mergePosts } = useSWR(`/api/get-merge-request-posts/${merge_id}`)
     if (mergePosts) {
       allPosts = combineMergeContent(allPosts, mergePosts, true)
-      loading_merge = false;
     }
+    loading_merge = false;
   }
   allPosts = _.orderBy(allPosts, ['created_at'],['desc'])
   const heroPost = allPosts[0]
