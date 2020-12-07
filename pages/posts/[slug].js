@@ -14,22 +14,24 @@ import { CMS_NAME } from '@/lib/constants'
 import markdownToHtml from '@/lib/markdownToHtml'
 import useSWR from 'swr'
 import _ from 'lodash'
-import { getMergeId } from '@/lib/merge'
+import { getMergeId, combineMergeContent } from '@/lib/merge'
 import RemoveMergeContentBanner from '@/components/remove-merge-content-banner'
 
 export default function Post({ post, morePosts, preview }) {
-  let merge_id;
   const router = useRouter()
-  if (process.browser) {
-    const { slug } = router.query
-    merge_id = getMergeId()
-    if (merge_id && slug) {
-      // Check for has merge post
-      const { data: mergePost } = useSWR(`/api/get-merge-request-posts/${merge_id}/${slug}`)
-      if (mergePost && mergePost.status !== 404) {
-        post = mergePost
-        delete router.isFallback
-      }
+  const { slug } = router.query
+  const merge_id = getMergeId()
+  if (merge_id && slug) {
+    // Check for has merge post
+    const { data: mergePost } = useSWR(`/api/get-merge-request-posts/${merge_id}/${slug}`)
+    if (mergePost && mergePost.status !== 404) {
+      post = mergePost
+      delete router.isFallback
+    }
+    // Check for has merge posts
+    const { data: mergePosts } = useSWR(`/api/get-merge-request-posts/${merge_id}`)
+    if (mergePosts) {
+      morePosts = combineMergeContent(morePosts, mergePosts)
     }
   }
   if (merge_id && !post?.slug) {

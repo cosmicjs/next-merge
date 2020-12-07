@@ -12,18 +12,15 @@ import { getMergeId, combineMergeContent } from '@/lib/merge'
 import RemoveMergeContentBanner from '@/components/remove-merge-content-banner'
 
 export default function Index({ allPosts }) {
-  let merge_id;
   let loading_merge;
-  if (process.browser) {
-    merge_id = getMergeId()
-    if (merge_id) {
-      loading_merge = true;
-      // Check for has merge posts
-      const { data: mergePosts } = useSWR(`/api/get-merge-request-posts/${merge_id}`)
-      if (mergePosts) {
-        allPosts = combineMergeContent(allPosts, mergePosts)
-        loading_merge = false;
-      }
+  const merge_id = getMergeId()
+  if (merge_id) {
+    loading_merge = true;
+    // Check for has merge posts
+    const { data: mergePosts } = useSWR(`/api/get-merge-request-posts/${merge_id}`)
+    if (mergePosts) {
+      allPosts = combineMergeContent(allPosts, mergePosts, true)
+      loading_merge = false;
     }
   }
   allPosts = _.orderBy(allPosts, ['created_at'],['desc'])
@@ -55,7 +52,6 @@ export default function Index({ allPosts }) {
                   author={heroPost.metadata.author}
                   slug={heroPost.slug}
                   excerpt={heroPost.metadata.excerpt}
-                  merge_id={merge_id}
                 />
               )}
               {morePosts.length > 0 && <MoreStories posts={morePosts} />}

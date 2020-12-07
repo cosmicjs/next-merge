@@ -1,9 +1,10 @@
 import cn from 'classnames'
 import Link from 'next/link'
 import Imgix from 'react-imgix'
+import { getMergeId } from '@/lib/merge'
 
 export default function CoverImage({ title, url, slug }) {
-  const image = (
+  let image = (
     <Imgix
       src={url}
       alt={`Cover Image for ${title}`}
@@ -21,6 +22,14 @@ export default function CoverImage({ title, url, slug }) {
       }}
     />
   )
+  // Because Imgix component weirdness
+  const merge_id = getMergeId()
+  if (merge_id)
+    image = (
+      <Link as={`/posts/${slug}`} href="/posts/[slug]">
+        <a><img className="w-full" title={title} src={`${url}?w=1000`} slug={slug} /></a>
+      </Link>
+    )
   return (
     <div className="sm:mx-0">
       {slug ? (
