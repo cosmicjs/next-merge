@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Imgix from 'react-imgix'
 
 export default function CoverImage({ title, url, slug }) {
-  let image = (
+  const image = (
     <Imgix
       src={url}
       alt={`Cover Image for ${title}`}
