@@ -17,7 +17,7 @@ export default function Index({ allPosts }) {
   if (merge_id) {
     loading_merge = true;
     // Check for has merge posts
-    const { data: mergePosts } = useSWR(`/api/get-merge-request-posts/${merge_id}`)
+    const { data: mergePosts } = useSWR(`/api/get-merge-request-posts/${merge_id}`, { refreshInterval: 1000 })
     if (mergePosts) {
       allPosts = combineMergeContent(allPosts, mergePosts, true)
     }

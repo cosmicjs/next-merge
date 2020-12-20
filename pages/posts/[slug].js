@@ -23,13 +23,13 @@ export default function Post({ post, morePosts, preview }) {
   const merge_id = getMergeId()
   if (merge_id && slug) {
     // Check for has merge post
-    const { data: mergePost } = useSWR(`/api/get-merge-request-posts/${merge_id}/${slug}`)
+    const { data: mergePost } = useSWR(`/api/get-merge-request-posts/${merge_id}/${slug}`, { refreshInterval: 1000 })
     if (mergePost && mergePost.status !== 404) {
       post = mergePost
       delete router.isFallback
     }
     // Check for has merge posts
-    const { data: mergePosts } = useSWR(`/api/get-merge-request-posts/${merge_id}`)
+    const { data: mergePosts } = useSWR(`/api/get-merge-request-posts/${merge_id}`, { refreshInterval: 1000 })
     if (mergePosts) {
       morePosts = combineMergeContent(morePosts, mergePosts)
     }
