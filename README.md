@@ -15,6 +15,8 @@ Once you have access to [the environment variables you'll need](#step-3-set-up-e
 ## What is Cosmic Merge Requests?
 Cosmic Merge Requests is a feature in the [Cosmic headless CMS](https://www.cosmicjs.com/features) that enables you to do bulk edits, preview, and approval workflows for content updates. Learn more about merge requests in the [Cosmic blog announcement](https://www.cosmicjs.com/blog/introducing-merge-requests).
 
+Uses [SWR](https://swr.vercel.app/) for instant previews on content updates in preview mode.
+
 
 ## How to use
 
