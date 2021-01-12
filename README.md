@@ -81,6 +81,7 @@ To add the ability to preview content from a merge request, follow these steps:
 http://localhost:4000?merge_id=[merge_id]
 ```
 Click "Save".
+
 4. Now you can Add or Edit any content in your Staging Bucket.
 5. After adding and editing content in staging, go back to your Merge Request and notice the Changes to Objects, Object Types, and / or Media.
 6. Click the "Preview" button to see content from the merge request now visible in your locally running app.
