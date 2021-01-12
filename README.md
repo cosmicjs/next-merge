@@ -12,6 +12,9 @@ Once you have access to [the environment variables you'll need](#step-3-set-up-e
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/git?c=1&s=https://github.com/cosmicjs/next-merge&env=COSMIC_BUCKET_SLUG,COSMIC_READ_KEY,COSMIC_PREVIEW_SECRET&envDescription=Required%20to%20connect%20the%20app%20with%20Cosmic&envLink=https://vercel.link/cms-cosmic-env)
 
+## What is Cosmic Merge Requests?
+Cosmic Merge Requests is a feature in the [Cosmic headless CMS](https://www.cosmicjs.com/features) that enables you to do bulk edits, preview, and approval workflows for content updates. Learn more about merge requests in the [Cosmic blog announcement](https://www.cosmicjs.com/blog/introducing-merge-requests).
+
 
 ## How to use
 
