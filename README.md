@@ -10,7 +10,12 @@ This example showcases Next.js's [Static Generation](https://nextjs.org/docs/bas
 
 Once you have access to [the environment variables you'll need](#step-3-set-up-environment-variables), deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/git?c=1&s=https://github.com/vercel/next.js/tree/canary/examples/cms-cosmic&env=COSMIC_BUCKET_SLUG,COSMIC_READ_KEY,COSMIC_PREVIEW_SECRET&envDescription=Required%20to%20connect%20the%20app%20with%20Cosmic&envLink=https://vercel.link/cms-cosmic-env)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/git?c=1&s=https://github.com/cosmicjs/next-merge&env=COSMIC_BUCKET_SLUG,COSMIC_READ_KEY,COSMIC_PREVIEW_SECRET&envDescription=Required%20to%20connect%20the%20app%20with%20Cosmic&envLink=https://vercel.link/cms-cosmic-env)
+
+## What is Cosmic Merge Requests?
+Cosmic Merge Requests is a feature in the [Cosmic headless CMS](https://www.cosmicjs.com/features) that enables you to do bulk edits, preview, and approval workflows for content updates. Learn more about merge requests in the [Cosmic blog announcement](https://www.cosmicjs.com/blog/introducing-merge-requests).
+
+Uses [SWR](https://swr.vercel.app/) for instant previews on content updates in preview mode.
 
 
 ## How to use
@@ -67,7 +72,7 @@ yarn install
 PORT=4000 yarn dev
 ```
 
-Your blog should be up and running on [http://localhost:3000](http://localhost:4000)! If it doesn't work, post on [GitHub discussions](https://github.com/vercel/next.js/discussions).
+Your blog should be up and running on [http://localhost:4000](http://localhost:4000)! If it doesn't work, post on [GitHub discussions](https://github.com/vercel/next.js/discussions).
 
 ### Step 5. Try Merge preview mode
 
@@ -81,6 +86,7 @@ To add the ability to preview content from a merge request, follow these steps:
 http://localhost:4000?merge_id=[merge_id]
 ```
 Click "Save".
+
 4. Now you can Add or Edit any content in your Staging Bucket.
 5. After adding and editing content in staging, go back to your Merge Request and notice the Changes to Objects, Object Types, and / or Media.
 6. Click the "Preview" button to see content from the merge request now visible in your locally running app.
