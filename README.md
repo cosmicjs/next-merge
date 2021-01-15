@@ -2,7 +2,7 @@
 
 This example showcases Next.js's [Static Generation](https://nextjs.org/docs/basic-features/pages) feature using [Cosmic](https://cosmicjs.com/) as the data source.
 
-Includes [Cosmic Merge Request preview ](https://www.cosmicjs.com/blog/introducing-merge-requests) giving you the ability to do bulk updates between Buckets, see bulk update previews, get approvals from other team members, and more.
+Includes [Cosmic merge request preview] (https://www.cosmicjs.com/blog/introducing-merge-requests) giving you the ability to do bulk updates between Buckets, see bulk update previews, get approvals from other team members, and more.
 
 
 ## Demo
@@ -88,10 +88,10 @@ To add the ability to preview content from a merge request, follow these steps:
 ```
 http://localhost:4000?merge_id=[merge_id]
 ```
-The `[merge_id]` shortcode will be converted into the merge request id which will be used to get the Objects in the Merge Request.
+The `[merge_id]` shortcode will be converted into the merge request id which will be used to get the Objects in the merge request.
 
-4. Add / Edit content in your Staging Bucket. Any edits to Objects, Object Types, and Media will be added to the Merge Request (deleting content does not affect it).
-5. After adding and editing content in staging, go back to your Merge Request and notice the Changes to Objects, Object Types, and / or Media.
+4. Add / Edit content in your Staging Bucket. Any edits to Objects, Object Types, and Media will be added to the merge request (deleting content does not affect it).
+5. After adding and editing content in staging, go back to your merge request and notice the Changes to Objects, Object Types, and / or Media.
 6. Click the "Preview" button to see content from the merge request now visible in your locally running app.
 7. Make more changes in your Staging Bucket and see real time updates in the app thanks to [SWR](https://swr.vercel.app/) :)
 
