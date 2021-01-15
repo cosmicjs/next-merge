@@ -2,6 +2,9 @@
 
 This example showcases Next.js's [Static Generation](https://nextjs.org/docs/basic-features/pages) feature using [Cosmic](https://cosmicjs.com/) as the data source.
 
+Includes connection [Cosmic Merge Request Preview ](https://www.cosmicjs.com/blog/introducing-merge-requests) giving you the ability to do bulk updates between Buckets, see bulk update previews, get approvals from other team members, and more.
+
+
 ## Demo
 
 [https://cosmic-next-blog.vercel.app/](https://cosmic-next-blog.vercel.app/)
