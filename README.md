@@ -78,34 +78,34 @@ Your blog should be up and running on [http://localhost:4000](http://localhost:4
 
 To add the ability to preview content from a merge request, follow these steps:
 
-1. In the Projects page in Cosmic, clone your current Bucket with Next.js Merge content into a new Staging Bucket by clicking "Clone Bucket"
-2. After cloning your Bucket, create a new merge request in your Bucket project clicking the "Merge Icon" in the main nav (or from the Projects table located in `/projects` after logging in)
-3. Select the Source Bucket (Staging) to your Target Bucket (Production). Click "Review Changes".
-4. There shouldn't be any changes to preview yet. Add your merge link exactly as this:
+1. To clone a Bucket into your Project, go to <i>Your Bucket > Basic Settings</i>, scroll down, and click "Clone Bucket".
+2. After cloning your Bucket, create a new merge request in your Bucket project clicking the "Add Merge Request" button on the Dasboard
+3. Select the Source Bucket (Staging) and your Target Bucket (Production). Click "Review Changes".
+4. There shouldn't be any changes to preview yet. Now add your merge Preview Link exactly the following and click "Save":
 ```
 http://localhost:4000?merge_id=[merge_id]
 ```
-Click "Save".
+The `[merge_id]` shortcode will be converted into the merge request id which will be used to get the Objects in the Merge Request.
 
-4. Now you can Add or Edit any content in your Staging Bucket.
+4. Add / Edit content in your Staging Bucket. Any edits to Objects, Object Types, and Media will be added to the Merge Request (deleting content does not affect it).
 5. After adding and editing content in staging, go back to your Merge Request and notice the Changes to Objects, Object Types, and / or Media.
 6. Click the "Preview" button to see content from the merge request now visible in your locally running app.
-7. Make more changes in your Staging Bucket and see real time updates in the app :)
+7. Make more changes in your Staging Bucket and see real time updates in the app thanks to [SWR](https://swr.vercel.app/) :)
 
 To exit preview mode, you can click on **You are previewing merge content. Click here to remove** at the top.
 
 ### Step 6. Deploy on Vercel
 
-You can deploy this app to the cloud with [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+You can deploy this app to the cloud with [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-merge-example) ([Documentation](https://nextjs.org/docs/deployment)).
 
 #### Deploy Your Local Project
 
-To deploy your local project to Vercel, push it to GitHub/GitLab/Bitbucket and [import to Vercel](https://vercel.com/import/git?utm_source=github&utm_medium=readme&utm_campaign=next-example).
+To deploy your local project to Vercel, push it to GitHub/GitLab/Bitbucket and [import to Vercel](https://vercel.com/import/git?utm_source=github&utm_medium=readme&utm_campaign=next-merge-example).
 
 **Important**: When you import your project on Vercel, make sure to click on **Environment Variables** and set them to match your `.env.local` file.
 
 #### Deploy from Our Template
 
-Alternatively, you can deploy using our template by clicking on the Deploy button below.
+Alternatively, you can deploy using this template by clicking on the Deploy button below.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/git?c=1&s=https://github.com/cosmicjs/next-merge&env=COSMIC_BUCKET_SLUG,COSMIC_READ_KEY,COSMIC_PREVIEW_SECRET&envDescription=Required%20to%20connect%20the%20app%20with%20Cosmic&envLink=https://vercel.link/cms-cosmic-env)
