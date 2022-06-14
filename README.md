@@ -75,7 +75,7 @@ yarn install
 yarn dev
 ```
 
-Your blog should be up and running on [http://localhost:4000](http://localhost:4000)! If it doesn't work, post on [GitHub discussions](https://github.com/vercel/next.js/discussions).
+Your blog should be up and running on [http://localhost:3000](http://localhost:3000)! If it doesn't work, post on [GitHub discussions](https://github.com/vercel/next.js/discussions).
 
 ### Step 5. Try Merge preview mode
 
@@ -86,7 +86,7 @@ To add the ability to preview content from a merge request, follow these steps:
 3. Select the Source Bucket (Staging) and your Target Bucket (Production). Click "Review Changes".
 4. There shouldn't be any changes to preview yet. Now add your merge Preview Link exactly the following and click "Save":
 ```
-http://localhost:4000?merge_id=[merge_id]
+http://localhost:3000?merge_id=[merge_id]
 ```
 The `[merge_id]` shortcode will be converted into the merge request id which will be used to get the Objects in the merge request.
 
