@@ -2,13 +2,13 @@
   "name": "cms-cosmic",
   "version": "1.0.0",
   "scripts": {
-    "dev": "next -p $PORT",
+    "dev": "next",
     "build": "next build",
-    "start": "next start -p $PORT"
+    "start": "next start"
   },
   "dependencies": {
     "classnames": "2.2.6",
-    "cosmicjs": "^3.2.43",
+    "cosmicjs": "^4.1.7",
     "date-fns": "2.14.0",
     "lazysizes": "^5.2.1-rc2",
     "next": "latest",
