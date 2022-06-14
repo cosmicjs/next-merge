@@ -67,12 +67,12 @@ COSMIC_PREVIEW_SECRET=...
 
 ```bash
 npm install
-PORT=4000 npm run dev
+npm run dev
 
 # or
 
 yarn install
-PORT=4000 yarn dev
+yarn dev
 ```
 
 Your blog should be up and running on [http://localhost:4000](http://localhost:4000)! If it doesn't work, post on [GitHub discussions](https://github.com/vercel/next.js/discussions).
