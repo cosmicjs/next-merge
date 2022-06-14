@@ -112,3 +112,5 @@ To deploy your local project to Vercel, push it to GitHub/GitLab/Bitbucket and [
 Alternatively, you can deploy using this template by clicking on the Deploy button below.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/git?c=1&s=https://github.com/cosmicjs/next-merge&env=COSMIC_BUCKET_SLUG,COSMIC_READ_KEY,COSMIC_PREVIEW_SECRET&envDescription=Required%20to%20connect%20the%20app%20with%20Cosmic&envLink=https://vercel.link/cms-cosmic-env)
+
+Deploy!
