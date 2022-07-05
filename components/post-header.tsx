@@ -2,8 +2,23 @@ import Avatar from './avatar'
 import Date from './date'
 import CoverImage from './cover-image'
 import PostTitle from './post-title'
+import { Author, Imgix } from 'interfaces'
 
-export default function PostHeader({ title, coverImage, date, author }) {
+type PostHeaderProps = {
+  title: string,
+  coverImage: Imgix,
+  date: string,
+  author: Author,
+};
+
+const PostHeader = (props: PostHeaderProps) => {
+  const {
+    title,
+    coverImage,
+    date,
+    author
+  } = props;
+
   return (
     <>
       <PostTitle>{title}</PostTitle>
@@ -14,11 +29,11 @@ export default function PostHeader({ title, coverImage, date, author }) {
         />
       </div>
       <div className="mb-8 md:mb-16 sm:mx-0">
-        <CoverImage title={title} url={coverImage.imgix_url} />
+        <CoverImage title={title} url={coverImage.imgix_url} slug={''} />
       </div>
       <div className="max-w-2xl mx-auto">
         <div className="block md:hidden mb-6">
-          <Avatar name={author.name} picture={author.picture} />
+          <Avatar name={author.title} picture={author.metadata.picture.imgix_url} />
         </div>
         <div className="mb-6 text-lg">
           <Date dateString={date} />
@@ -27,3 +42,5 @@ export default function PostHeader({ title, coverImage, date, author }) {
     </>
   )
 }
+
+export default PostHeader;

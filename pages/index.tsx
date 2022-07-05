@@ -1,4 +1,3 @@
-import Container from '@/components/container'
 import MoreStories from '@/components/more-stories'
 import HeroPost from '@/components/hero-post'
 import Intro from '@/components/intro'
@@ -10,8 +9,24 @@ import useSWR from 'swr'
 import _ from 'lodash'
 import { getMergeId, combineMergeContent } from '@/lib/merge'
 import RemoveMergeContentBanner from '@/components/remove-merge-content-banner'
+import { Post } from 'interfaces'
+import dynamic from 'next/dynamic'
 
-export default function Index({ allPosts }) {
+const DynamicContainer = dynamic(() => import('@/components/container'), {
+  ssr: false,
+})
+
+type IndexProps = {
+  allPosts: Post[];
+  preview: boolean;
+};
+
+const Index = (props: IndexProps) => {
+  let {
+    allPosts,
+    preview
+  } = props;
+
   let loading_merge;
   const merge_id = getMergeId()
   if (merge_id) {
@@ -23,16 +38,16 @@ export default function Index({ allPosts }) {
     }
     loading_merge = false;
   }
-  allPosts = _.orderBy(allPosts, ['created_at'],['desc'])
+  allPosts = _.orderBy(allPosts, ['created_at'], ['desc'])
   const heroPost = allPosts[0]
   const morePosts = allPosts.slice(1)
   return (
-    <>
-      <Layout>
+    <div>
+      <Layout preview={preview}>
         <Head>
           <title>Next.js Blog Example with {CMS_NAME}</title>
         </Head>
-        <Container>
+        <DynamicContainer>
           {
             merge_id &&
             <RemoveMergeContentBanner />
@@ -42,7 +57,7 @@ export default function Index({ allPosts }) {
               Loading Merge Preview...
             </h1>
           ) : (
-            <>
+            <div>
               <Intro />
               {heroPost && (
                 <HeroPost
@@ -55,17 +70,27 @@ export default function Index({ allPosts }) {
                 />
               )}
               {morePosts.length > 0 && <MoreStories posts={morePosts} />}
-            </>
+            </div>
           )}
-        </Container>
+        </DynamicContainer>
       </Layout>
-    </>
+    </div>
   )
 }
 
-export async function getStaticProps({ preview }) {
+export default Index;
+
+type staticProps = {
+  preview: boolean;
+};
+
+export const getStaticProps = async (props: staticProps) => {
+  const {
+    preview = null
+  } = props;
   const allPosts = (await getAllPostsForHome(preview)) || []
   return {
-    props: { allPosts },
+    props: { allPosts, preview }
   }
 }
+

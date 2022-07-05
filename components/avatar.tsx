@@ -1,4 +1,10 @@
-export default function Avatar({ name, picture }) {
+type AvatarProps = {
+  name: string, 
+  picture: string,
+};
+
+const Avatar = (props: AvatarProps) => {
+  const { name, picture } = props;
   return (
     <div className="flex items-center">
       {picture && (
@@ -12,3 +18,5 @@ export default function Avatar({ name, picture }) {
     </div>
   )
 }
+
+export default Avatar;
