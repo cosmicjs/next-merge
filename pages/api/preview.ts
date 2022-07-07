@@ -1,15 +1,8 @@
 import { getPreviewPostBySlug } from '@/lib/api'
 
-type previewProps = {
-  req: any,
-  res: any,
-};
-
-const preview = async (props: previewProps) => {
-  const {
-    req,
-    res,
-  } = props;
+export default async function preview(req, res) {
+  // Check the secret and next parameters
+  // This secret should only be known to this API route and the CMS
   if (
     req.query.secret !== process.env.COSMIC_PREVIEW_SECRET ||
     !req.query.slug
@@ -33,6 +26,3 @@ const preview = async (props: previewProps) => {
   res.writeHead(307, { Location: `/posts/${post.slug}` })
   res.end()
 }
-
-
-export default preview;

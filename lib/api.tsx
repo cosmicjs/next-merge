@@ -4,7 +4,6 @@ import ErrorPage from 'next/error'
 
 const BUCKET_SLUG = process.env.COSMIC_BUCKET_SLUG
 const READ_KEY = process.env.COSMIC_READ_KEY
-const COSMIC_API_URL = `https://api.cosmicjs.com`
 
 const bucket = Cosmic().bucket({
   slug: BUCKET_SLUG,
@@ -46,15 +45,10 @@ export const getAllPostsWithSlug = async () => {
   return data.objects
 }
 
-type getMergeRequestPostsProps = {
-  merge_id,
-};
-
-export const getMergeRequestPosts = async (props: getMergeRequestPostsProps) => {
-  const { merge_id } = props;
-  const merge_api_url = `${COSMIC_API_URL}/v2/buckets/${BUCKET_SLUG}/merge-requests/${merge_id}/objects?read_key=${READ_KEY}&pretty=true&props=slug,title,content,metadata,created_at,type_slug`;
-  const data = await fetch(merge_api_url)
-    .then(response => response.json());
+export const getMergeRequestPosts = async (merge_id: string) => {
+  const data = await bucket.getMergeRequestObjects({
+    id: merge_id
+  })
   return data.objects
 }
 

@@ -18,22 +18,22 @@ export const getMergeId = () => {
   return merge_id;
 }
 
-export const combineMergeContent = (content: Post[], mergeContent: Post[], addNewContent: boolean) => {
+export const combineMergeContent = (posts: Post[], mergePosts: Post[], addNewContent: boolean) => {
   // Edit existing content
-  content.forEach((post: any, i) => {
-    const mergePostFound = post.find(mergeContent, { slug: post.slug });
+  posts.forEach((post: Post, i) => {
+    const mergePostFound = mergePosts.find((mergePost) => mergePost.slug === post.slug);
     if (mergePostFound) {
-      content[i] = mergePostFound;
+      posts[i] = mergePostFound;
     }
   })
   // Add new content
   if (addNewContent) {
-    mergeContent.forEach((post: any, i) => {
-      const allPostFound = post.find(content, { slug: post.slug });
-      if (!allPostFound && post.type_slug === 'posts') {
-        content.push(post);
+    mergePosts.forEach((mergePost: Post) => {
+      const allPostFound = posts.find((post) => post.slug === mergePost.slug);
+      if (!allPostFound && mergePost.type === 'posts') {
+        posts.push(mergePost);
       }
     })
   }
-  return content;
+  return posts;
 }

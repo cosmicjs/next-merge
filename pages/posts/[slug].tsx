@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
-import Container from '@/components/container'
 import PostBody from '@/components/post-body'
 import MoreStories from '@/components/more-stories'
 import Header from '@/components/header'
@@ -20,6 +19,8 @@ import { Post } from 'interfaces'
 import { ParsedUrlQueryInput } from 'querystring'
 import dynamic from 'next/dynamic'
 
+const fetcher = url => fetch(url).then(r => r.json())
+
 const DynamicContainer = dynamic(() => import('@/components/container'), {
   ssr: false,
 })
@@ -29,7 +30,6 @@ type PostProps = {
   morePosts: Post[];
   preview: boolean;
 };
-
 
 const Post = (props: PostProps) => {
   let {
@@ -41,16 +41,26 @@ const Post = (props: PostProps) => {
   const router = useRouter()
   const { slug } = router.query
   const merge_id = getMergeId()
+
   if (merge_id && slug) {
     // Check for has merge post
-    const { data: mergePost } = useSWR(`/api/get-merge-request-posts/${merge_id}/${slug}`, { refreshInterval: 1000 })
+    const { data: mergePost } = useSWR(
+      merge_id ? `/api/get-merge-request-posts/${merge_id}/${slug}` : null,
+      fetcher
+    );
+
     if (mergePost && mergePost.status !== 404) {
       post = mergePost
       // @ts-ignore
       delete router.isFallback
     }
+  
     // Check for has merge posts
-    const { data: mergePosts } = useSWR(`/api/get-merge-request-posts/${merge_id}`, { refreshInterval: 1000 })
+    const { data: mergePosts } = useSWR(
+      merge_id ? `/api/get-merge-request-posts/${merge_id}/` : null,
+      fetcher
+    );
+
     if (mergePosts) {
       morePosts = combineMergeContent(morePosts, mergePosts, true)
     }
