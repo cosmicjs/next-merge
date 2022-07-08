@@ -11,6 +11,7 @@ export type Author = {
 }
 
 export type Post = {
+  type: string;
   title: string;
   slug: string;
   content: string;

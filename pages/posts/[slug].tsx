@@ -42,7 +42,6 @@ const Post = (props: PostProps) => {
   const { slug } = router.query
   const merge_id = getMergeId()
 
-  if (merge_id && slug) {
     // Check for has merge post
     const { data: mergePost } = useSWR(
       merge_id ? `/api/get-merge-request-posts/${merge_id}/${slug}` : null,
@@ -64,7 +63,7 @@ const Post = (props: PostProps) => {
     if (mergePosts) {
       morePosts = combineMergeContent(morePosts, mergePosts, true)
     }
-  }
+  
   if (merge_id && !post?.slug) {
     // @ts-ignore
     router.isFallback = true;

@@ -1,6 +1,7 @@
 import Container from './container'
 import cn from 'classnames'
 import { EXAMPLE_PATH } from '@/lib/constants'
+import Link from 'next/link';
 
 type AlertProps = {
   preview: boolean,
@@ -22,12 +23,12 @@ const Alert = (props: AlertProps) => {
             {preview ? (
               <>
                 This is page is a preview.{' '}
-                <a
+                <Link
                   href="/api/exit-preview"
                   className="underline hover:text-cyan duration-200 transition-colors"
                 >
                   Click here
-                </a>{' '}
+                </Link>{' '}
                 to exit preview mode.
               </>
             ) : (
