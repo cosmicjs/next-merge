@@ -4,21 +4,25 @@ import ErrorPage from 'next/error'
 
 const BUCKET_SLUG = process.env.COSMIC_BUCKET_SLUG
 const READ_KEY = process.env.COSMIC_READ_KEY
-const COSMIC_API_URL = `https://api.cosmicjs.com`
 
 const bucket = Cosmic().bucket({
   slug: BUCKET_SLUG,
   read_key: READ_KEY,
 })
 
-export async function getPreviewPostBySlug(slug) {
+type getPreviewPostBySlugProps = {
+  slug: string,
+};
+
+export const getPreviewPostBySlug = async (props: getPreviewPostBySlugProps) => {
+  const { slug } = props;
   const params = {
     query: {
       slug,
       type: 'posts'
     },
     props: 'slug',
-    status: 'all',
+    status: 'any',
   }
 
   try {
@@ -30,7 +34,7 @@ export async function getPreviewPostBySlug(slug) {
   }
 }
 
-export async function getAllPostsWithSlug() {
+export const getAllPostsWithSlug = async () => {
   const params = {
     query: {
       type: 'posts'
@@ -41,14 +45,14 @@ export async function getAllPostsWithSlug() {
   return data.objects
 }
 
-export async function getMergeRequestPosts(merge_id) {
-  const merge_api_url = `${COSMIC_API_URL}/v2/buckets/${BUCKET_SLUG}/merge-requests/${merge_id}/objects?read_key=${READ_KEY}&pretty=true&props=slug,title,content,metadata,created_at,type_slug`;
-  const data = await fetch(merge_api_url)
-  .then(response => response.json());
+export const getMergeRequestPosts = async (merge_id: string) => {
+  const data = await bucket.getMergeRequestObjects({
+    id: merge_id
+  })
   return data.objects
 }
 
-export async function getAllPostsForHome(preview) {
+export const getAllPostsForHome = async (preview: boolean) => {
   const params = {
     query: {
       type: 'posts'
@@ -60,18 +64,19 @@ export async function getAllPostsForHome(preview) {
   const data = await bucket.getObjects(params)
   let allPosts = data.objects;
   // Reorder
-  allPosts = _.orderBy(allPosts, ['created_at'],['desc'])
+  allPosts = _.orderBy(allPosts, ['created_at'], ['desc'])
   return allPosts;
 }
 
-export async function getPostAndMorePosts(slug, preview) {
+export const getPostAndMorePosts = async (slug: string, preview: boolean,) => {
+
   const singleObjectParams = {
-    query: { 
+    query: {
       slug,
       type: 'posts'
     },
     props: 'slug,title,metadata,created_at',
-    ...(preview && { status: 'all' }),
+    ...(preview && { status: 'any' }),
   }
   const moreObjectParams = {
     query: {
@@ -79,7 +84,7 @@ export async function getPostAndMorePosts(slug, preview) {
     },
     limit: 3,
     props: 'title,slug,metadata,created_at',
-    ...(preview && { status: 'all' }),
+    ...(preview && { status: 'any' }),
   }
   let object
   try {
