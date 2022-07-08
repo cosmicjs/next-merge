@@ -1,6 +1,6 @@
 # A statically generated blog example using Next.js, Cosmic, and Cosmic Merge preview capabilities
 
-This example showcases Next.js's [Static Generation](https://nextjs.org/docs/basic-features/pages) feature using [Cosmic](https://cosmicjs.com/) as the data source.
+This example showcases Next.js's [Static Generation](https://nextjs.org/docs/basic-features/pages) feature using [Cosmic](https://cosmicjs.com/) as the data source. Now with TypeScript!
 
 Includes [Cosmic merge request](https://www.cosmicjs.com/blog/introducing-merge-requests) preview giving you the ability to do bulk updates between Buckets, see bulk update previews, get approvals from other team members, and more.
 
